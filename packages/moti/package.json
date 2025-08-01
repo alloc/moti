@@ -70,18 +70,22 @@
     "clean": "expo-module clean",
     "test": "expo-module test",
     "prepare": "yarn expo-module prepare",
-    "prepublishOnly": "expo-module prepublishOnly"
+    "prepublishOnly": "expo-module prepublishOnly",
+    "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "react-native-reanimated": "*"
   },
   "devDependencies": {
-    "@react-navigation/native": "^6.1.18",
-    "expo-linear-gradient": "^10.0.3",
-    "expo-module-scripts": "^3.4.1",
-    "react-native-linear-gradient": "^2.6.2",
-    "react-native-reanimated": "3.11.0",
-    "typescript": "^5.2.0"
+    "@react-navigation/native": "^7.1.16",
+    "@types/react": "19.0.12",
+    "expo-linear-gradient": "^14.1.5",
+    "expo-module-scripts": "^4.1.9",
+    "react": "^19.0.0",
+    "react-native": "^0.79.4",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-reanimated": "^4.0.1",
+    "typescript": "^5.8.3"
   },
   "react-native-builder-bob": {
     "source": "src",
@@ -99,6 +103,6 @@
   },
   "gitHead": "36d489545d0a4e3b83af8650bdb9881a251fa777",
   "dependencies": {
-    "framer-motion": "^6.5.1"
+    "framer-motion": "^12.23.12"
   }
 }

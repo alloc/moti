@@ -14,7 +14,6 @@ import type {
   ImageStyle,
   TextStyle,
   ViewStyle,
-  
 } from 'react-native'
 import type {
   SharedValue,

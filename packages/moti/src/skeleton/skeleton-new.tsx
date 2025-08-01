@@ -4,6 +4,7 @@ import {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  type SharedValue,
 } from 'react-native-reanimated'
 import type Animated from 'react-native-reanimated'
 
@@ -113,7 +114,7 @@ const AnimatedGradient = React.memo(
     backgroundSize: number
     transition?: MotiTransitionProp
     show: boolean
-    measuredWidthSv: Animated.SharedValue<number>
+    measuredWidthSv: SharedValue<number>
   } & Pick<MotiSkeletonProps, 'Gradient'>) {
     return (
       <MotiView

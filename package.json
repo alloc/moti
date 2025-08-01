@@ -80,10 +80,10 @@
     "jest": "^26.6.1",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
-    "react-native": "^0.74.1",
-    "typescript": "^5.2.0"
+    "typescript": "^5.8.3"
   },
   "author": "Fernando Rojo <frojo@sas.upenn.edu>",
+  "packageManager": "yarn@4.9.2",
   "auto": {
     "plugins": [
       "npm",

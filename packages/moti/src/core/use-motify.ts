@@ -50,7 +50,7 @@ const debug = (...args: any[]) => {
 
 const isColor = (styleKey: string) => {
   'worklet'
-  const keys = {
+  const keys: Record<string, boolean> = {
     backgroundColor: true,
     borderBottomColor: true,
     borderLeftColor: true,
@@ -84,7 +84,7 @@ const isTransform = (styleKey: string) => {
     skewY: true,
   }
 
-  return Boolean(transforms[styleKey])
+  return Boolean(transforms[styleKey as keyof Transforms])
 }
 
 function animationDelay<Animate>(
@@ -107,17 +107,17 @@ function animationDelay<Animate>(
   }
 }
 
-const withSpringConfigKeys: (keyof WithSpringConfig)[] = [
+const withSpringConfigKeys: (keyof SpringConfig)[] = [
   'stiffness',
   'overshootClamping',
-  'restDisplacementThreshold',
-  'restSpeedThreshold',
+  'energyThreshold',
   'velocity',
   'reduceMotion',
   'mass',
   'damping',
   'duration',
   'dampingRatio',
+  'clamp',
 ]
 
 function animationConfig<Animate>(
@@ -133,7 +133,7 @@ function animationConfig<Animate>(
   let animationType: Required<TransitionConfig>['type'] = 'spring'
   if (isColor(key) || key === 'opacity') animationType = 'timing'
 
-  const styleSpecificTransition = transition?.[key as any]
+  const styleSpecificTransition = transition?.[key as keyof MotiTransition<Animate>]
 
   // say that we're looking at `width`
   // first, check if we have transition.width.type
@@ -165,23 +165,23 @@ function animationConfig<Animate>(
 
   // debug({ loop, key, repeatCount, animationType })
 
-  let config = {}
+  let config: any = {}
   let reduceMotion = ReduceMotion.System
   // so sad, but fix it later :(
   let animation = (...props: any): any => props
 
   if (animationType === 'timing') {
     const duration =
-      (transition?.[key] as WithTimingConfig | undefined)?.duration ??
-      (transition as WithTimingConfig | undefined)?.duration
+      (transition?.[key] as TimingConfig | undefined)?.duration ??
+      (transition as TimingConfig | undefined)?.duration
 
     const easing =
-      (transition?.[key] as WithTimingConfig | undefined)?.easing ??
-      (transition as WithTimingConfig | undefined)?.easing
+      (transition?.[key] as TimingConfig | undefined)?.easing ??
+      (transition as TimingConfig | undefined)?.easing
 
     const timingReduceMotion =
-      (transition?.[key] as WithTimingConfig | undefined)?.reduceMotion ??
-      (transition as WithTimingConfig | undefined)?.reduceMotion
+      (transition?.[key] as TimingConfig | undefined)?.reduceMotion ??
+      (transition as TimingConfig | undefined)?.reduceMotion
 
     if (easing) {
       config['easing'] = easing
@@ -196,10 +196,10 @@ function animationConfig<Animate>(
     animation = withTiming
   } else if (animationType === 'spring') {
     animation = withSpring
-    config = {} as WithSpringConfig
+    config = {} as SpringConfig
     for (const configKey of withSpringConfigKeys) {
-      const styleSpecificConfig = transition?.[key]?.[configKey]
-      const transitionConfigForKey = transition?.[configKey]
+      const styleSpecificConfig = (transition?.[key] as SpringConfig | undefined)?.[configKey]
+      const transitionConfigForKey = (transition as SpringConfig | undefined)?.[configKey]
       if (configKey === 'reduceMotion') {
         reduceMotion = transitionConfigForKey || styleSpecificConfig
       }
@@ -212,17 +212,18 @@ function animationConfig<Animate>(
   } else if (animationType === 'decay') {
     animation = withDecay
     config = {}
-    const configKeys: (keyof WithDecayConfig)[] = [
+    const configKeys: (keyof DecayConfig)[] = [
       'clamp',
       'velocity',
       'deceleration',
       'velocityFactor',
       'reduceMotion',
-      'velocityFactor',
+      'rubberBandEffect',
+      'rubberBandFactor',
     ]
     for (const configKey of configKeys) {
-      const styleSpecificConfig = transition?.[key]?.[configKey]
-      const transitionConfigForKey = transition?.[configKey]
+      const styleSpecificConfig = (transition?.[key] as DecayConfig | undefined)?.[configKey]
+      const transitionConfigForKey = (transition as DecayConfig | undefined)?.[configKey]
       if (configKey === 'reduceMotion') {
         reduceMotion = transitionConfigForKey || styleSpecificConfig
       }
