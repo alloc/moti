@@ -34,26 +34,31 @@
   ],
   "exports": {
     ".": {
+      "react-native": "./src/index.tsx",
       "import": "./build/index.js",
       "require": "./build/index.js",
       "types": "./index.d.ts"
     },
     "./interactions": {
+      "react-native": "./src/interactions/index.ts",
       "import": "./build/interactions/index.js",
       "require": "./build/interactions/index.js",
       "types": "./interactions/index.d.ts"
     },
     "./skeleton": {
+      "react-native": "./src/skeleton/index.ts",
       "import": "./build/skeleton/index.js",
       "require": "./build/skeleton/index.js",
       "types": "./skeleton/index.d.ts"
     },
     "./svg": {
+      "react-native": "./src/svg/index.ts",
       "import": "./build/svg/index.js",
       "require": "./build/svg/index.js",
       "types": "./svg/index.d.ts"
     },
     "./author": {
+      "react-native": "./src/author/index.ts",
       "import": "./build/author/index.js",
       "require": "./build/author/index.js",
       "types": "./author/index.d.ts"
