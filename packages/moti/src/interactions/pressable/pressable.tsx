@@ -5,6 +5,7 @@ import {
   useSharedValue,
   runOnJS,
   useDerivedValue,
+  SharedValue,
 } from 'react-native-reanimated'
 
 import { View as MotiView } from '../../components/view'
@@ -247,7 +248,7 @@ To silence this warning without solving the actual issue, you can use the danger
             containers: {
               ...context?.containers,
               [INTERACTION_CONTAINER_ID]: interaction,
-            },
+            } as Record<string, SharedValue<MotiPressableInteractionState>>,
           }
           if (id) {
             interactions.containers[id] = interaction
