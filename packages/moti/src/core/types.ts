@@ -1,20 +1,4 @@
-import type {
-  PerspectiveTransform,
-  RotateTransform,
-  RotateXTransform,
-  RotateYTransform,
-  RotateZTransform,
-  ScaleTransform,
-  ScaleXTransform,
-  ScaleYTransform,
-  TranslateXTransform,
-  TranslateYTransform,
-  SkewXTransform,
-  SkewYTransform,
-  ImageStyle,
-  TextStyle,
-  ViewStyle,
-} from 'react-native'
+import type { ImageStyle, TextStyle, ViewStyle } from 'react-native'
 import type {
   SharedValue,
   WithDecayConfig,
@@ -23,21 +7,13 @@ import type {
   DerivedValue,
 } from 'react-native-reanimated'
 
-export type Transforms = PerspectiveTransform &
-  RotateTransform &
-  RotateXTransform &
-  RotateYTransform &
-  RotateZTransform &
-  ScaleTransform &
-  ScaleXTransform &
-  ScaleYTransform &
-  TranslateXTransform &
-  TranslateYTransform &
-  SkewXTransform &
-  SkewYTransform
+type Mutable<T> = T extends object ? { -readonly [P in keyof T]: T[P] } : never
 
-export type MotiTranformProps = Partial<Transforms> &
-  Pick<ViewStyle, 'transform'>
+export type Transforms = Mutable<
+  Exclude<ViewStyle['transform'], string | void>[number]
+>
+
+export type MotiTranformProps = Transforms & Pick<ViewStyle, 'transform'>
 
 export type TransitionConfigWithoutRepeats = (
   | ({ type?: 'spring' } & WithSpringConfig)
@@ -501,7 +477,7 @@ export type DynamicStyleProp<
   // in component usage, it will extract these from the style prop ideally
   AnimateType = ImageStyle & ViewStyle & TextStyle,
   // edit the style props to remove transform array, flattening it
-  // AnimateWithTransitions = Omit<AnimateType, 'transform'> & Partial<Transforms>,
+  // AnimateWithTransitions = Omit<AnimateType, 'transform'> & Transforms,
   AnimateWithTransforms = StyleValueWithReplacedTransforms<AnimateType>
   // allow the style values to be arrays for sequences, where values are primitives or objects with configs
 > = NonNullable<StyleValueWithSequenceArrays<AnimateWithTransforms>> &

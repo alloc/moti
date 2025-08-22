@@ -3,7 +3,6 @@ import type {
   usePresence as useFramerPresence,
 } from 'framer-motion'
 import { useEffect, useMemo } from 'react'
-import type { TransformsStyle } from 'react-native'
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -81,6 +80,7 @@ const isTransform = (
   'worklet'
 
   const transforms: Record<keyof Transforms, true> = {
+    matrix: true,
     perspective: true,
     rotate: true,
     rotateX: true,
@@ -89,6 +89,7 @@ const isTransform = (
     scale: true,
     scaleX: true,
     scaleY: true,
+    translate: true,
     translateX: true,
     translateY: true,
     skewX: true,
@@ -408,11 +409,9 @@ export function useMotify<Animate>({
         Object.keys(exitProp).length > 0)
   )
 
-  type Transform = Extract<TransformsStyle['transform'], readonly any[]>[number]
-
   const style = useAnimatedStyle(() => {
     const final: Record<string, any> & {
-      transform: Transform[]
+      transform: Transforms[]
     } = {
       transform: [],
     }
@@ -675,7 +674,7 @@ export function useMotify<Animate>({
 
           if (isTransform(key)) {
             // we have a sequence of transforms
-            const transform = {} as Transform
+            const transform = {} as Transforms
             transform[key] = finalValue
             final.transform.push(transform)
           } else {
@@ -685,7 +684,7 @@ export function useMotify<Animate>({
           }
         }
       } else if (isTransform(key)) {
-        const transform = {} as Transform
+        const transform = {} as Transforms
 
         let finalValue = animation(value, config, callback)
         if (shouldRepeat) {
