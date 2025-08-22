@@ -1,10 +1,10 @@
 {
   "extends": "expo-module-scripts/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react-jsx",
     "outDir": "./build",
+    "customConditions": ["react-native-strict-api", "react-native"],
     "types": []
   },
-  "include": ["./src", "./src/interactions", "./src/author"],
+  "include": ["./src"],
   "exclude": ["**/__mocks__/*", "**/__tests__/*", "**/*/node_modules/*"]
 }
