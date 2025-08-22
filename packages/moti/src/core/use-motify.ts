@@ -711,7 +711,7 @@ export function useMotify<Animate>({
         final[key] = {}
 
         for (const innerStyleKey in value) {
-          let finalValue = animation(value, config, callback)
+          let finalValue = animation(value[innerStyleKey], config, callback)
           if (shouldRepeat) {
             finalValue = withRepeat(
               finalValue,
