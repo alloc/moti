@@ -4,6 +4,8 @@ import React, {
   ComponentType,
   FunctionComponent,
   useContext,
+  RefAttributes,
+  ForwardRefExoticComponent,
 } from 'react'
 import type { ImageStyle, TextStyle, ViewStyle } from 'react-native'
 import Animated, {
@@ -15,45 +17,44 @@ import Animated, {
 import type { MotiProps } from './types'
 import { useMotify } from './use-motify'
 
+export interface MotifyComponent<
+  Props extends object,
+  Ref,
+  Animate = ViewStyle | ImageStyle | TextStyle
+> extends ForwardRefExoticComponent<
+    Props & AnimatedProps<Props> & MotiProps<Animate> & RefAttributes<Ref>
+  > {}
+
 export default function motify<
   Props extends object,
   Ref,
   Animate = ViewStyle | ImageStyle | TextStyle
->(ComponentWithoutAnimation: ComponentType<Props>) {
-  const Component = Animated.createAnimatedComponent(
-    ComponentWithoutAnimation as FunctionComponent<Props>
+>(
+  BaseComponent: ComponentType<Props>
+): () => MotifyComponent<Props, Ref, Animate> {
+  const AnimatedComponent = Animated.createAnimatedComponent(
+    BaseComponent as FunctionComponent<any>
   )
 
   const withAnimations = () => {
-    const Motified = forwardRef<
-      Ref,
-      Props &
-        AnimatedProps<Props> &
-        MotiProps<Animate> & {
-          children?: React.ReactNode
-        }
-    >(function Moti(props, ref) {
+    const Motified = forwardRef(function Moti(props: { style?: any }, ref) {
       const animated = useMotify({
         ...props,
         usePresenceValue: usePresence(),
         presenceContext: useContext(PresenceContext),
       })
 
-      const style = (props as any).style
-
       return (
-        <Component
-          {...(props as any)}
-          style={style ? [style, animated.style] : animated.style}
-          ref={ref as any}
+        <AnimatedComponent
+          {...props}
+          style={props.style ? [props.style, animated.style] : animated.style}
+          ref={ref}
         />
       )
     })
 
     Motified.displayName = `Moti.${
-      ComponentWithoutAnimation.displayName ||
-      ComponentWithoutAnimation.name ||
-      'NoName'
+      BaseComponent.displayName || BaseComponent.name || 'NoName'
     }`
 
     return Motified
