@@ -204,7 +204,7 @@ export type MotiAnimationProp<Animate> = MotiProps<Animate>['animate']
 export type MotiFromProp<Animate> = MotiProps<Animate>['from']
 export type MotiExitProp<Animate> = MotiProps<Animate>['exit']
 
-type OrDerivedValue<T> = T | DerivedValue<T>
+type OrDerivedValue<T> = T | Omit<DerivedValue<T>, 'set'>
 
 type FallbackAnimateProp = StyleValueWithReplacedTransforms<
   ImageStyle & TextStyle & ViewStyle
