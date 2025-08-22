@@ -38,7 +38,7 @@ export function motifySvg<
       ComponentWithoutAnimation
     )
     const Motified = forwardRef<
-      React.RefAttributes<React.ElementRef<C>>,
+      React.RefAttributes<React.ComponentRef<C>>,
       Props & MotiProps<Animate> & AdditionalProps
     >(function Moti(props, ref) {
       const animated = useMotify<Animate>(props)
