@@ -1,5 +1,6 @@
-import { Image as RImage } from 'react-native'
-
+import { HostInstance, Image, ImageProps, ImageStyle } from 'react-native'
 import { motify } from '../core'
 
-export const Image = motify(RImage)()
+const MotiImage = motify<ImageProps, HostInstance, ImageStyle>(Image)()
+
+export { MotiImage as Image }

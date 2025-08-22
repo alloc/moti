@@ -1,5 +1,6 @@
-import { ScrollView as RScrollView } from 'react-native'
-
+import { HostInstance, ScrollView, ScrollViewProps, ViewStyle } from 'react-native'
 import { motify } from '../core'
 
-export const ScrollView = motify(RScrollView)()
+const MotiScrollView = motify<ScrollViewProps, HostInstance, ViewStyle>(ScrollView)()
+
+export { MotiScrollView as ScrollView }

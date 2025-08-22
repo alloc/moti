@@ -1,5 +1,6 @@
-import { View as RView } from 'react-native'
-
+import { HostInstance, View, ViewProps, ViewStyle } from 'react-native'
 import { motify } from '../core'
 
-export const View = motify(RView)()
+const MotiView = motify<ViewProps, HostInstance, ViewStyle>(View)()
+
+export { MotiView as View }

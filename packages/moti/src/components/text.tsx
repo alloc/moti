@@ -1,5 +1,6 @@
-import { Text as RText } from 'react-native'
-
+import { HostInstance, Text, TextProps, TextStyle } from 'react-native'
 import { motify } from '../core'
 
-export const Text = motify(RText)()
+const MotiText = motify<TextProps, HostInstance, TextStyle>(Text)()
+
+export { MotiText as Text }
