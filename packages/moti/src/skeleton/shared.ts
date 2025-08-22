@@ -1,3 +1,5 @@
+import { ColorValue } from 'react-native'
+
 export const DEFAULT_SKELETON_SIZE = 32
 
 export const baseColors = {
@@ -8,7 +10,9 @@ export const baseColors = {
   },
 } as const
 
-const makeColors = (mode: keyof typeof baseColors) => [
+const makeColors = (
+  mode: keyof typeof baseColors
+): readonly [ColorValue, ColorValue, ...ColorValue[]] => [
   baseColors[mode].primary,
   baseColors[mode].secondary,
   baseColors[mode].secondary,

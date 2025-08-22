@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState, createContext, useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ColorValue } from 'react-native'
 
 import { View as MotiView } from '../components'
 import { AnimatePresence, MotiTransitionProp } from '../core'
@@ -120,7 +120,7 @@ const AnimatedGradient = React.memo(
     transition = {},
   }: {
     measuredWidth: number
-    colors: string[]
+    colors: readonly [ColorValue, ColorValue, ...ColorValue[]]
     backgroundSize: number
     transition?: MotiTransitionProp
   }) {

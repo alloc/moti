@@ -1,4 +1,4 @@
-import { DimensionValue } from 'react-native'
+import { ColorValue, DimensionValue } from 'react-native'
 import { MotiTransitionProp } from '../core'
 import { baseColors } from './shared'
 
@@ -56,7 +56,7 @@ export type MotiSkeletonProps = {
   /**
    * Gradient colors. Defaults to grayish black.
    */
-  colors?: string[]
+  colors?: readonly [ColorValue, ColorValue, ...ColorValue[]]
   /**
    * Default: `6`. Similar to `600%` for CSS `background-size`. Determines how much the gradient stretches.
    */
@@ -68,7 +68,7 @@ export type MotiSkeletonProps = {
   disableExitAnimation?: boolean
   transition?: MotiTransitionProp
   Gradient: React.ComponentType<{
-    colors: Array<string>
+    colors: readonly [ColorValue, ColorValue, ...ColorValue[]]
     start?: { x: number; y: number }
     end?: { x: number; y: number }
     style?: any

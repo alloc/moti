@@ -1,12 +1,11 @@
 import React, { createContext, useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ColorValue } from 'react-native'
 import {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   type SharedValue,
 } from 'react-native-reanimated'
-import type Animated from 'react-native-reanimated'
 
 import { View as MotiView } from '../components'
 import { MotiTransitionProp } from '../core'
@@ -110,7 +109,7 @@ const AnimatedGradient = React.memo(
     measuredWidthSv,
     Gradient,
   }: {
-    colors: string[]
+    colors: readonly [ColorValue, ColorValue, ...ColorValue[]]
     backgroundSize: number
     transition?: MotiTransitionProp
     show: boolean
