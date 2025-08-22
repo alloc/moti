@@ -4,23 +4,16 @@ const path = require('path')
 
 const config = getDefaultConfig(__dirname)
 
-// npm v7+ will install ../node_modules/react-native because of peerDependencies.
-// To prevent the incompatible react-native bewtween ./node_modules/react-native and ../node_modules/react-native,
-// excludes the one from the parent folder when bundling.
-config.resolver.blockList = [
-  ...Array.from(config.resolver.blockList ?? []),
-  new RegExp(path.resolve('../..', 'node_modules', 'react-native')),
-]
+config.watchFolders = [].concat(
+  config.watchFolders ?? [],
+  path.resolve(__dirname, '../../packages/moti/src')
+)
 
-config.resolver.nodeModulesPaths = [
-  path.resolve(__dirname, './node_modules'),
-  path.resolve(__dirname, '../../node_modules'),
-]
-
-config.resolver.assetExts.push('mjs')
-config.resolver.assetExts.push('cjs')
-
-config.watchFolders = [path.resolve(__dirname, '../..')]
+// Prevent resolver from using node_modules outside the example project.
+config.resolver.blockList = [].concat(
+  config.resolver.blockList ?? [],
+  new RegExp(path.resolve(__dirname, '../../node_modules/'))
+)
 
 config.transformer.getTransformOptions = async () => ({
   transform: {

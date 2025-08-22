@@ -31,7 +31,7 @@ export default function Presence() {
 
   return (
     <Pressable onPress={increment} style={styles.container}>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <View
           from={{
             opacity: 0,
