@@ -1,5 +1,5 @@
 {
-  "name": "moti",
+  "name": "@alloc/moti",
   "description": "The universal React Native animation library, powered by Reanimated 3. 🦉",
   "version": "0.30.0",
   "keywords": [
@@ -11,13 +11,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nandorojo/moti.git",
+    "url": "https://github.com/alloc/moti.git",
     "directory": "packages/moti"
   },
   "bugs": {
-    "url": "https://github.com/nandorojo/moti/issues"
+    "url": "https://github.com/alloc/moti/issues"
   },
-  "homepage": "https://github.com/nandorojo/moti.git#readme",
+  "homepage": "https://github.com/alloc/moti.git#readme",
   "main": "build/index.js",
   "react-native": "src/index.tsx",
   "source": "src/index.tsx",
