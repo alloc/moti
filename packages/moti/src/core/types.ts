@@ -214,8 +214,24 @@ type FallbackAnimateProp = StyleValueWithReplacedTransforms<
   ImageStyle & TextStyle & ViewStyle
 >
 
-export type MotiTransition<Animate = FallbackAnimateProp> = TransitionConfig &
-  Partial<Record<keyof Animate, TransitionConfig>>
+export type MotiTransition<Animate = FallbackAnimateProp> = TransitionConfig & {
+  [K in keyof Animate]?: TransitionConfig<
+    K extends
+      | 'opacity'
+      | 'backgroundColor'
+      | 'borderBottomColor'
+      | 'borderLeftColor'
+      | 'borderRightColor'
+      | 'borderTopColor'
+      | 'color'
+      | 'shadowColor'
+      | 'borderColor'
+      | 'borderEndColor'
+      | 'borderStartColor'
+      ? 'timing'
+      : 'spring'
+  >
+}
 
 export type MotiTransitionProp<Animate = FallbackAnimateProp> = OrDerivedValue<
   MotiTransition<Animate>
