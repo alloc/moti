@@ -1,4 +1,4 @@
-<img src="/assets/banner2.png" />
+<img src="https://github.com/alloc/moti/blob/master/assets/banner2.png" />
 
 The universal React Native animation library, powered by Reanimated 3.
 
