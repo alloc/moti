@@ -15,16 +15,11 @@ export type Transforms = Mutable<
 
 export type MotiTranformProps = Transforms & Pick<ViewStyle, 'transform'>
 
-export type TransitionConfigWithoutRepeats = (
-  | ({ type?: 'spring' } & WithSpringConfig)
-  | ({ type: 'timing' } & WithTimingConfig)
-  | ({ type: 'decay' } & WithDecayConfig)
-  | { type: 'no-animation' }
-) & {
+export type TransitionDelayConfig = {
   delay?: number
 }
 
-export type TransitionConfig = TransitionConfigWithoutRepeats & {
+export type TransitionRepeatConfig = {
   /**
    * Number of times this animation should repeat. To make it infinite, use the `loop` boolean.
    *
@@ -57,6 +52,39 @@ export type TransitionConfig = TransitionConfigWithoutRepeats & {
   repeatReverse?: boolean
 }
 
+type Simplify<T> = {} & {
+  [K in keyof T]: T[K]
+}
+
+export type SpringConfig = Simplify<
+  WithSpringConfig & TransitionDelayConfig & TransitionRepeatConfig
+>
+
+export type TimingConfig = Simplify<
+  WithTimingConfig & TransitionDelayConfig & TransitionRepeatConfig
+>
+
+export type DecayConfig = Simplify<
+  WithDecayConfig & TransitionDelayConfig & TransitionRepeatConfig
+>
+
+export interface TransitionConfigs {
+  spring: SpringConfig
+  timing: TimingConfig
+  decay: DecayConfig
+  'no-animation': TransitionDelayConfig & TransitionRepeatConfig
+}
+
+export type TransitionType = string & keyof TransitionConfigs
+
+export type TransitionConfig<
+  DefaultTransitionType extends TransitionType = 'spring'
+> = {
+  [T in TransitionType]:
+    | (TransitionConfigs[T] & { type: T })
+    | (TransitionConfigs[DefaultTransitionType] & { type?: undefined })
+}[TransitionType]
+
 export type SequenceItemObject<Value> = {
   value: Value
   onDidAnimate?: (
@@ -67,7 +95,7 @@ export type SequenceItemObject<Value> = {
       attemptedSequenceItemValue: Value
     }
   ) => void
-} & TransitionConfigWithoutRepeats
+} & Omit<TransitionConfig, keyof TransitionRepeatConfig>
 
 export type SequenceItem<Value> =
   | // raw style values
