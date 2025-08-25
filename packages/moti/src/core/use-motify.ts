@@ -71,6 +71,8 @@ const hasInlineOnDidAnimate = (
   value: any
   onDidAnimate: InlineOnDidAnimate<any>
 } => {
+  'worklet'
+
   return typeof value === 'object' && value !== null && 'onDidAnimate' in value
 }
 
