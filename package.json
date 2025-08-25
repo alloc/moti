@@ -65,6 +65,7 @@
     }
   },
   "devDependencies": {
+    "@alloc/moti": "workspace:packages/moti",
     "@babel/helper-string-parser": "^7.22.5",
     "@commitlint/config-conventional": "^11.0.0",
     "@manypkg/cli": "^0.17.0",
