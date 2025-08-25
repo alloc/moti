@@ -158,6 +158,7 @@ type Omit<T, K extends string> = T extends object
 
 type AllKeys<T> = T extends object ? keyof T : never
 
+// use a Record type to declare keys with an exhaustive check
 function typedObjectKeys<T>(obj: Record<AllKeys<T>, true>) {
   'worklet'
 
@@ -171,7 +172,8 @@ function animationConfig<Animate>(
   'worklet'
 
   let animation: AnimationFactory | undefined
-  let config: AnimationConfig & Record<string, any>
+  let config: AnimationConfig & Record<string, any> = {}
+  let reduceMotion = ReduceMotion.System
   let repeatCount: number
   let repeatReverse: boolean
 
@@ -193,16 +195,17 @@ function animationConfig<Animate>(
     repeatReverse =
       overrides?.repeatReverse ?? transition?.repeatReverse ?? true
 
+    let configKeys: string[] | undefined
+
     if (transitionType === 'timing') {
       animation = withTiming
-      config = {
-        duration: overrides?.duration ?? transition?.duration,
-        easing: overrides?.easing ?? transition?.easing,
-      }
+      configKeys = typedObjectKeys<Omit<WithTimingConfig, 'reduceMotion'>>({
+        duration: true,
+        easing: true,
+      })
     } else if (transitionType === 'spring') {
       animation = withSpring
-      config = {}
-      typedObjectKeys<Omit<WithSpringConfig, 'reduceMotion'>>({
+      configKeys = typedObjectKeys<Omit<WithSpringConfig, 'reduceMotion'>>({
         clamp: true,
         damping: true,
         dampingRatio: true,
@@ -212,33 +215,36 @@ function animationConfig<Animate>(
         overshootClamping: true,
         stiffness: true,
         velocity: true,
-      }).forEach((configKey) => {
-        config[configKey] = overrides?.[configKey] ?? transition[configKey]
       })
     } else if (transitionType === 'decay') {
       animation = withDecay
-      config = {}
-      typedObjectKeys<Omit<WithDecayConfig, 'reduceMotion'>>({
+      configKeys = typedObjectKeys<Omit<WithDecayConfig, 'reduceMotion'>>({
         clamp: true,
         deceleration: true,
         rubberBandEffect: true,
         rubberBandFactor: true,
         velocity: true,
         velocityFactor: true,
-      }).forEach((configKey) => {
-        config[configKey] = overrides?.[configKey] ?? transition[configKey]
       })
     } else {
-      config = {}
       repeatCount = 0
     }
 
+    configKeys?.forEach((configKey) => {
+      const configValue = overrides?.[configKey] ?? transition[configKey]
+      if (configValue !== undefined) {
+        config[configKey] = configValue
+      }
+    })
+
     if (animation) {
       // root-level reduceMotion takes precedence
-      config.reduceMotion = transition?.reduceMotion ?? overrides?.reduceMotion
+      reduceMotion =
+        transition?.reduceMotion ??
+        overrides?.reduceMotion ??
+        reduceMotion
     }
   } else {
-    config = {}
     repeatCount = 0
     repeatReverse = true
   }
@@ -246,7 +252,7 @@ function animationConfig<Animate>(
   return {
     animation: animation ?? ((value: any) => value),
     config,
-    reduceMotion: config.reduceMotion ?? ReduceMotion.System,
+    reduceMotion,
     repeatReverse,
     repeatCount,
     shouldRepeat: !!repeatCount,
