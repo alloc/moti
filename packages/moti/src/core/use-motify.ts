@@ -94,7 +94,6 @@ const isTransform = (
     scale: true,
     scaleX: true,
     scaleY: true,
-    translate: true,
     translateX: true,
     translateY: true,
     skewX: true,
