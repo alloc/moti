@@ -1,6 +1,6 @@
 import { useMemo, ReactNode, forwardRef } from 'react'
 import { Pressable } from 'react-native'
-import type { HostInstance } from 'react-native'
+import type { View } from 'react-native'
 import {
   useSharedValue,
   runOnJS,
@@ -17,7 +17,7 @@ import {
 import { Hoverable } from './hoverable'
 import type { MotiPressableInteractionState, MotiPressableProps } from './types'
 
-export const MotiPressable = forwardRef<HostInstance, MotiPressableProps>(
+export const MotiPressable = forwardRef<View, MotiPressableProps>(
   function MotiPressable(props, ref) {
     const {
       animate,
