@@ -163,7 +163,7 @@ export type OnDidAnimate<
      * />
      * ```
      */
-    attemptedValue: Animate[Key]
+    attemptedValue: unknown
     /**
      * If the value you passed was a sequence, then this will pass the attempted `item` from the sequence array that just tried to animate.
      *
@@ -196,7 +196,7 @@ export type OnDidAnimate<
      *  />
      * ```
      */
-    attemptedSequenceItemValue?: Animate[Key]
+    attemptedSequenceItemValue?: unknown
   }
 ) => void
 
