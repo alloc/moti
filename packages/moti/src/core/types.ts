@@ -13,7 +13,9 @@ export type Transforms = Mutable<
   Exclude<ViewStyle['transform'], string | void>[number]
 >
 
-export type MotiTranformProps = Transforms & Pick<ViewStyle, 'transform'>
+export type MotiTranformProps = Partial<Transforms> & {
+  transform?: ViewStyle['transform']
+}
 
 export type TransitionDelayConfig = {
   delay?: number
