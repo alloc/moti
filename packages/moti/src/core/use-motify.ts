@@ -551,7 +551,7 @@ export function useMotify<Animate>({
               transformObject
             )[0] as keyof Transforms
             const transformValue = transformObject[transformKey]
-            const transform: Transforms = {}
+            const transform = {} as Transforms
 
             if (Array.isArray(transformValue)) {
               // we have a sequence in this transform...
