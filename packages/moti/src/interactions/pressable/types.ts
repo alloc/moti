@@ -80,7 +80,7 @@ export type MotiPressableProps = {
   onKeyDown?: (e: KeyboardEvent) => void
   onKeyUp?: (e: KeyboardEvent) => void
   onLongPress?: () => void
-  hitSlop?: Insets
+  hitSlop?: Insets | number | null
   /*
    * (Optional) Unique ID to identify this interaction.
    *
