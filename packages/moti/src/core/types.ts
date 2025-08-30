@@ -1,4 +1,9 @@
-import type { ImageStyle, TextStyle, ViewStyle } from 'react-native'
+import type {
+  AnimatableNumericValue,
+  ImageStyle,
+  TextStyle,
+  ViewStyle,
+} from 'react-native'
 import type {
   SharedValue,
   WithDecayConfig,
@@ -13,8 +18,10 @@ export type Transforms = Mutable<
   Exclude<ViewStyle['transform'], string | void>[number]
 >
 
-export type MotiTranformProps = Partial<Transforms> & {
+export type MotiTranformProps = {
   transform?: ViewStyle['transform']
+} & {
+  [K in keyof Transforms]?: AnimatableNumericValue
 }
 
 export type TransitionDelayConfig = {
