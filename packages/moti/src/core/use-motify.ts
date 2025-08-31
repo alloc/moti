@@ -12,7 +12,6 @@ import {
   withDelay,
   withRepeat,
   withSequence,
-  runOnJS,
   ReduceMotion,
 } from 'react-native-reanimated'
 import type {
@@ -21,6 +20,7 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated'
+import { runOnJS } from 'react-native-worklets'
 
 import { PackageName } from './constants/package-name'
 import type {
