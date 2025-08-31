@@ -16,6 +16,7 @@ import {
 } from './context'
 import { Hoverable } from './hoverable'
 import type { MotiPressableInteractionState, MotiPressableProps } from './types'
+import type { MotiTransition } from '../../core/types'
 
 export const MotiPressable = forwardRef<View, MotiPressableProps>(
   function MotiPressable(props, ref) {
@@ -80,12 +81,12 @@ export const MotiPressable = forwardRef<View, MotiPressableProps>(
       [hovered, pressed]
     )
 
-    const transition = useDerivedValue(() => {
+    const transition = useDerivedValue((): MotiTransition => {
       if (typeof transitionProp === 'function') {
         return transitionProp(interaction.value)
       }
 
-      return transitionProp || {}
+      return transitionProp || ({} as MotiTransition)
     }, [transitionProp, interaction])
 
     const __state = useDerivedValue(() => {

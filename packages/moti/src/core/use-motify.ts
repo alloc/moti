@@ -460,9 +460,11 @@ export function useMotify<Animate>({
     })
 
     // allow shared values as transitions
-    let transition: MotiTransition<Animate> | undefined
+    let transition: MotiTransition | undefined
     if (transitionProp && 'value' in transitionProp) {
       transition = transitionProp.value
+    } else if (typeof transitionProp == 'function') {
+      transitionProp = transitionProp(custom())
     } else {
       transition = transitionProp
     }
@@ -581,8 +583,7 @@ export function useMotify<Animate>({
                 transform[transformKey] = finalValue
               }
             } else {
-              const transformConfig =
-                transition?.[transformKey as keyof Animate]
+              const transformConfig = transition?.[transformKey]
               if (transformConfig?.delay != null) {
                 delayMs = transformConfig.delay
               }
@@ -677,7 +678,7 @@ export function useMotify<Animate>({
             reduceMotion
           )
         }
-        const transformConfig = transition?.[key as keyof Animate]
+        const transformConfig = transition?.[key]
         if (transformConfig?.delay != null) {
           delayMs = transformConfig.delay
         }

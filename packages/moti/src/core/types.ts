@@ -338,7 +338,9 @@ export interface MotiProps<
    * />
    * ```
    */
-  transition?: MotiTransitionProp<AnimateWithTransforms>
+  transition?:
+    | MotiTransitionProp<AnimateWithTransforms>
+    | ((custom?: any) => MotiTransition<AnimateWithTransforms>)
   /**
    * Define animation configurations for exiting components.
    *

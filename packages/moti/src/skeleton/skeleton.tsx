@@ -3,7 +3,11 @@ import React, { useState, createContext, useContext } from 'react'
 import { View, StyleSheet, ColorValue } from 'react-native'
 
 import { View as MotiView } from '../components'
-import { AnimatePresence, MotiTransitionProp } from '../core'
+import {
+  AnimatePresence,
+  type MotiTransition,
+  type MotiTransitionProp,
+} from '../core'
 import {
   DEFAULT_SKELETON_SIZE as DEFAULT_SIZE,
   defaultDarkColors,
@@ -117,7 +121,7 @@ const AnimatedGradient = React.memo(
     measuredWidth,
     colors,
     backgroundSize,
-    transition = {},
+    transition = {} as MotiTransition,
   }: {
     measuredWidth: number
     colors: readonly [ColorValue, ColorValue, ...ColorValue[]]
