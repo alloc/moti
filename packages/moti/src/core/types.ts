@@ -77,22 +77,13 @@ export type DecayConfig = Simplify<
   WithDecayConfig & TransitionDelayConfig & TransitionRepeatConfig
 >
 
-export interface TransitionConfigs {
-  spring: SpringConfig
-  timing: TimingConfig
-  decay: DecayConfig
-  'no-animation': TransitionDelayConfig & TransitionRepeatConfig
-}
+export type TransitionType = 'spring' | 'timing' | 'decay' | 'no-animation'
 
-export type TransitionType = string & keyof TransitionConfigs
-
-export type TransitionConfig<
-  DefaultTransitionType extends TransitionType = 'spring'
-> = {
-  [T in TransitionType]:
-    | (TransitionConfigs[T] & { type: T })
-    | (TransitionConfigs[DefaultTransitionType] & { type?: undefined })
-}[TransitionType]
+export type TransitionConfig = {
+  type: TransitionType
+} & SpringConfig &
+  TimingConfig &
+  DecayConfig
 
 export type SequenceItemObject<Value> = {
   value: Value
@@ -224,22 +215,7 @@ type FallbackAnimateProp = StyleValueWithReplacedTransforms<
 >
 
 export type MotiTransition<Animate = FallbackAnimateProp> = TransitionConfig & {
-  [K in keyof Animate]?: TransitionConfig<
-    K extends
-      | 'backgroundColor'
-      | 'borderBottomColor'
-      | 'borderColor'
-      | 'borderEndColor'
-      | 'borderLeftColor'
-      | 'borderRightColor'
-      | 'borderStartColor'
-      | 'borderTopColor'
-      | 'color'
-      | 'opacity'
-      | 'shadowColor'
-      ? 'timing'
-      : 'spring'
-  >
+  [K in keyof Animate]?: TransitionConfig
 }
 
 export type MotiTransitionProp<Animate = FallbackAnimateProp> = OrDerivedValue<

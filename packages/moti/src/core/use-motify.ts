@@ -33,6 +33,7 @@ import type {
   WithTransition,
   SequenceItemObject,
   TransitionType,
+  TransitionDelayConfig,
 } from './types'
 
 const debug = (...args: any[]) => {
@@ -111,7 +112,7 @@ function animationDelay<Animate>(
   'worklet'
 
   const key = _key as keyof Animate
-  let delayMs: TransitionConfig['delay'] = defaultDelay
+  let delayMs: unknown = defaultDelay
 
   if (transition?.[key]?.delay != null) {
     delayMs = transition?.[key]?.delay
@@ -121,6 +122,8 @@ function animationDelay<Animate>(
 
   return {
     delayMs,
+  } as {
+    delayMs: TransitionDelayConfig['delay']
   }
 }
 
