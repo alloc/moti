@@ -81,7 +81,12 @@ export type DecayConfig = Simplify<
 export type TransitionType = 'spring' | 'timing' | 'decay' | 'no-animation'
 
 export type TransitionConfig = {
-  type: TransitionType
+  /**
+   * The type of transition to use.
+   *
+   * Defaults to `spring`, except for opacity and color props, in which case `timing` is used.
+   */
+  type?: TransitionType
 } & SpringConfig &
   TimingConfig &
   DecayConfig
