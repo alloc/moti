@@ -11,6 +11,7 @@ import type {
   WithTimingConfig,
   DerivedValue,
 } from 'react-native-reanimated'
+import { WorkletFunction } from 'react-native-worklets'
 
 type Mutable<T> = T extends object ? { -readonly [P in keyof T]: T[P] } : never
 
@@ -340,7 +341,7 @@ export interface MotiProps<
    */
   transition?:
     | MotiTransitionProp<AnimateWithTransforms>
-    | ((custom?: any) => MotiTransition<AnimateWithTransforms>)
+    | WorkletFunction<[custom?: any], MotiTransition<AnimateWithTransforms>>
   /**
    * Define animation configurations for exiting components.
    *
@@ -367,7 +368,7 @@ export interface MotiProps<
    */
   exitTransition?:
     | MotiTransitionProp<AnimateWithTransforms>
-    | ((custom?: any) => MotiTransition<AnimateWithTransforms>)
+    | WorkletFunction<[custom?: any], MotiTransition<AnimateWithTransforms>>
   /**
    * Optionally delay the `animate` field.
    *
