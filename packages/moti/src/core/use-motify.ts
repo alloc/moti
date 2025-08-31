@@ -464,7 +464,7 @@ export function useMotify<Animate>({
     if (transitionProp && 'value' in transitionProp) {
       transition = transitionProp.value
     } else if (typeof transitionProp == 'function') {
-      transitionProp = transitionProp(custom())
+      transition = transitionProp(custom())
     } else {
       transition = transitionProp
     }
