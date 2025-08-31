@@ -1,7 +1,7 @@
 {
   "name": "@alloc/moti",
   "description": "The universal React Native animation library, powered by Reanimated 3. 🦉",
-  "version": "54.0.0-beta.4",
+  "version": "54.0.0-beta.5",
   "keywords": [
     "react-native",
     "ios",
